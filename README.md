@@ -13,3 +13,4 @@
 - Flyway
 - Thymeleaf
 - JWT
+- JaCoCo
