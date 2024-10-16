@@ -26,7 +26,7 @@ public class TokenService {
                 .withSubject(user.getEmail())
                 .withClaim("id", user.getId())
                 .withClaim("name", user.getName())
-                .withClaim("perfil", "ROLE_USER") // TODO: implementar perfis
+                .withClaim("perfil", "ROLE_USER")
                 .withExpiresAt(generateExpirationDate())
                 .sign(Algorithm.HMAC256(secret));
     }
