@@ -1,10 +1,12 @@
 package com.ferraz.codando_a_vida_backend.domain.user;
 
+import com.ferraz.codando_a_vida_backend.domain.AuditableEntity;
+import com.ferraz.codando_a_vida_backend.domain.EntityStatus;
 import com.ferraz.codando_a_vida_backend.infra.security.dto.RegisterDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,12 +20,8 @@ import java.util.List;
 @Table(name = "TB_USERS")
 @Data
 @AllArgsConstructor
-public class User implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class User extends AuditableEntity implements UserDetails {
 
     @Column(name = "NAME")
     private String name;
@@ -34,20 +32,9 @@ public class User implements UserDetails {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS")
-    private UserStatus status;
-
-    @Column(name = "CREATE_DATE_TIME")
-    private LocalDateTime createDate;
-
-    @Column(name = "UPDATE_DATE_TIME")
-    private LocalDateTime updateDate;
-
 
     public User() {
-        this.status = UserStatus.ACTIVE;
-        this.createDate = LocalDateTime.now();
+        super();
     }
 
     public User(RegisterDTO registerDTO, PasswordEncoder passwordEncoder) {
@@ -71,6 +58,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserStatus.ACTIVE.equals(this.status);
+        return EntityStatus.ACTIVE.equals(this.getStatus());
     }
 }
