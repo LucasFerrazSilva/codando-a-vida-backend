@@ -1,4 +1,4 @@
-package com.ferraz.codando_a_vida_backend.domain;
+package com.ferraz.codando_a_vida_backend.domain.auditable;
 
 import com.ferraz.codando_a_vida_backend.domain.user.User;
 import jakarta.persistence.*;
@@ -44,5 +44,27 @@ public abstract class AuditableEntity {
         this.createUser = createUser;
     }
 
+    public abstract <T extends NewAuditableDTO> void create(T dto);
+
+    public abstract <T extends UpdateAuditableDTO> void update(T dto, User updateUser);
+
+
+    public <T extends NewAuditableDTO> void create(T dto, User createUser) {
+        create(dto);
+        this.status = EntityStatus.ACTIVE;
+        this.createDate = LocalDateTime.now();
+        this.createUser = createUser;
+    }
+
+    public void update(User updateUser) {
+        this.updateDate = LocalDateTime.now();
+        this.updateUser = updateUser;
+    }
+
+    public void inactivate(User updateUser) {
+        this.status = EntityStatus.INACTIVE;
+        this.updateUser = updateUser;
+        this.updateDate = LocalDateTime.now();
+    }
 
 }

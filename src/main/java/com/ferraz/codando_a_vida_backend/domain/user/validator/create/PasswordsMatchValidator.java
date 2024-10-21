@@ -1,14 +1,17 @@
-package com.ferraz.codando_a_vida_backend.domain.user.validator;
+package com.ferraz.codando_a_vida_backend.domain.user.validator.create;
 
+import com.ferraz.codando_a_vida_backend.domain.auditable.NewAuditableDTO;
 import com.ferraz.codando_a_vida_backend.domain.user.exception.PasswordsDontMatchException;
 import com.ferraz.codando_a_vida_backend.infra.security.dto.RegisterDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordsMatchValidator implements RegisterUserValidator {
+public class PasswordsMatchValidator implements NewUserValidator {
 
     @Override
-    public void validate(RegisterDTO registerDTO) {
+    public <T extends NewAuditableDTO> void validate(T dto) {
+        RegisterDTO registerDTO = (RegisterDTO) dto;
+
         if (!registerDTO.password().equals(registerDTO.confirmPassword()))
             throw new PasswordsDontMatchException();
     }

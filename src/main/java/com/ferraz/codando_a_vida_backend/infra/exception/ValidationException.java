@@ -1,4 +1,4 @@
-package com.ferraz.codando_a_vida_backend.infra.security.exception;
+package com.ferraz.codando_a_vida_backend.infra.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

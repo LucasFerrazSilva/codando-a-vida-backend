@@ -1,5 +1,6 @@
-package com.ferraz.codando_a_vida_backend.infra.security.exception;
+package com.ferraz.codando_a_vida_backend.infra.exception;
 
+import com.ferraz.codando_a_vida_backend.domain.auditable.NewAuditableException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -67,6 +68,11 @@ public class ExceptionsHandler {
     public ResponseEntity<ExceptionMessageDTO> tratarErro500(Exception ex) {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ExceptionMessageDTO(ex.getLocalizedMessage()));
+    }
+
+    @ExceptionHandler(NewAuditableException.class)
+    public ResponseEntity<ExceptionMessageDTO> handleNewAuditableException(NewAuditableException ex) {
+        return tratarErro500(ex);
     }
 
     @ExceptionHandler(ValidationException.class)

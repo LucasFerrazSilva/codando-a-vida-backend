@@ -42,8 +42,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO registerDTO, UriComponentsBuilder uriComponentsBuilder) {
-        User user = userService.register(registerDTO);
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO registerDTO, UriComponentsBuilder uriComponentsBuilder) throws Exception {
+        User user = userService.create(registerDTO);
         UserDTO userDTO = new UserDTO(user);
         URI newUserUri = uriComponentsBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(newUserUri).body(userDTO);
