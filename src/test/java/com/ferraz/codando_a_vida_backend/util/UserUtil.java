@@ -2,7 +2,7 @@ package com.ferraz.codando_a_vida_backend.util;
 
 import com.ferraz.codando_a_vida_backend.domain.user.User;
 import com.ferraz.codando_a_vida_backend.domain.user.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.ferraz.codando_a_vida_backend.infra.security.dto.RegisterDTO;
 
 import java.util.Random;
 
@@ -12,10 +12,9 @@ public class UserUtil {
 
     public static User createValidUser(UserRepository userRepository) {
         String name = "User" + new Random().nextInt(10000);
+        RegisterDTO registerDTO = new RegisterDTO(name, name + "@mail.com", defaultPassword, defaultPassword);
         User user = new User();
-        user.setName(name);
-        user.setEmail(name + "@mail.com");
-        user.setPassword(new BCryptPasswordEncoder().encode(defaultPassword));
+        user.create(registerDTO);
         return userRepository.save(user);
     }
 

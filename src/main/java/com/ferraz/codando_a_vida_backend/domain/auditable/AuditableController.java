@@ -25,7 +25,7 @@ public abstract class AuditableController<T extends AuditableEntity, D, N extend
     private final String path;
     private final Class<D> dtoClass;
 
-    public AuditableController(Class<T> instanceClass, AuditableService<T, R> service, String path, Class<D> dtoClass) {
+    protected AuditableController(Class<T> instanceClass, AuditableService<T, R> service, String path, Class<D> dtoClass) {
         this.instanceClass = instanceClass;
         this.service = service;
         this.path = path;
