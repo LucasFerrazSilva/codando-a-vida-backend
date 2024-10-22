@@ -44,8 +44,8 @@ public class User extends AuditableEntity implements UserDetails {
     }
 
     @Override
-    public <T extends UpdateAuditableDTO> void update(T dto, User updateUser) {
-
+    public <T extends UpdateAuditableDTO> void update(T dto) {
+        // Implementar atualizacao de usuario
     }
 
 
