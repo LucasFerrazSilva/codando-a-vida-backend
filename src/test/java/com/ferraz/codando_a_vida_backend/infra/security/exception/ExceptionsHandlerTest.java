@@ -1,5 +1,9 @@
 package com.ferraz.codando_a_vida_backend.infra.security.exception;
 
+import com.ferraz.codando_a_vida_backend.infra.exception.ExceptionMessageDTO;
+import com.ferraz.codando_a_vida_backend.infra.exception.ExceptionsHandler;
+import com.ferraz.codando_a_vida_backend.infra.exception.ValidationException;
+import com.ferraz.codando_a_vida_backend.infra.exception.ValidationExceptionDataDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.DisabledException;

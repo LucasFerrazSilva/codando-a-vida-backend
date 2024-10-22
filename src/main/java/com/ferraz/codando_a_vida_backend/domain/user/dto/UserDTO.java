@@ -1,13 +1,13 @@
 package com.ferraz.codando_a_vida_backend.domain.user.dto;
 
 import com.ferraz.codando_a_vida_backend.domain.user.User;
-import com.ferraz.codando_a_vida_backend.domain.user.UserStatus;
+import com.ferraz.codando_a_vida_backend.domain.auditable.EntityStatus;
 
 public record UserDTO(
-        Long id,
+        Integer id,
         String name,
         String email,
-        UserStatus status
+        EntityStatus status
 ) {
     public UserDTO(User user) {
         this(

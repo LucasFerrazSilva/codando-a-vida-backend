@@ -1,29 +1,29 @@
 package com.ferraz.codando_a_vida_backend.domain.user;
 
+import com.ferraz.codando_a_vida_backend.domain.auditable.AuditableEntity;
+import com.ferraz.codando_a_vida_backend.domain.auditable.EntityStatus;
+import com.ferraz.codando_a_vida_backend.domain.auditable.NewAuditableDTO;
+import com.ferraz.codando_a_vida_backend.domain.auditable.UpdateAuditableDTO;
 import com.ferraz.codando_a_vida_backend.infra.security.dto.RegisterDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "TB_USERS")
 @Data
-@AllArgsConstructor
-public class User implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class User extends AuditableEntity implements UserDetails {
 
     @Column(name = "NAME")
     private String name;
@@ -34,28 +34,18 @@ public class User implements UserDetails {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS")
-    private UserStatus status;
-
-    @Column(name = "CREATE_DATE_TIME")
-    private LocalDateTime createDate;
-
-    @Column(name = "UPDATE_DATE_TIME")
-    private LocalDateTime updateDate;
-
-
-    public User() {
-        this.status = UserStatus.ACTIVE;
-        this.createDate = LocalDateTime.now();
-    }
-
-    public User(RegisterDTO registerDTO, PasswordEncoder passwordEncoder) {
-        this();
+    @Override
+    public <T extends NewAuditableDTO> void create(T dto) {
+        RegisterDTO registerDTO = (RegisterDTO) dto;
 
         this.name = registerDTO.name();
         this.email = registerDTO.email();
-        this.password = passwordEncoder.encode(registerDTO.password());
+        this.password = new BCryptPasswordEncoder().encode(registerDTO.password());
+    }
+
+    @Override
+    public <T extends UpdateAuditableDTO> void update(T dto, User updateUser) {
+
     }
 
 
@@ -71,6 +61,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return UserStatus.ACTIVE.equals(this.status);
+        return EntityStatus.ACTIVE.equals(this.getStatus());
     }
+
 }
