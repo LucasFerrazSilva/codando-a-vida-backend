@@ -10,4 +10,9 @@ public interface PostRepository extends AuditableRepository<Post> {
 
     List<Post> findByCategoryAndStatus(Category category, EntityStatus status);
 
+    boolean existsByPath(String path);
+    boolean existsByPathAndIdNot(String path, Integer id);
+    boolean existsByTitle(String path);
+    boolean existsByTitleAndIdNot(String path, Integer id);
+
 }

@@ -1,5 +1,6 @@
 package com.ferraz.codando_a_vida_backend.controller;
 
+import com.ferraz.codando_a_vida_backend.domain.auditable.NewAuditableException;
 import com.ferraz.codando_a_vida_backend.domain.user.User;
 import com.ferraz.codando_a_vida_backend.domain.user.UserService;
 import com.ferraz.codando_a_vida_backend.domain.user.dto.UserDTO;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,7 +42,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO registerDTO, UriComponentsBuilder uriComponentsBuilder) throws Exception {
+    public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO registerDTO, UriComponentsBuilder uriComponentsBuilder) throws NewAuditableException {
         User user = userService.create(registerDTO);
         UserDTO userDTO = new UserDTO(user);
         URI newUserUri = uriComponentsBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();

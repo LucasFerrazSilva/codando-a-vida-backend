@@ -1,5 +1,6 @@
 package com.ferraz.codando_a_vida_backend.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ferraz.codando_a_vida_backend.domain.auditable.AuditableEntity;
 import com.ferraz.codando_a_vida_backend.domain.auditable.EntityStatus;
 import com.ferraz.codando_a_vida_backend.domain.auditable.NewAuditableDTO;
@@ -49,6 +50,7 @@ public class User extends AuditableEntity implements UserDetails {
     }
 
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
