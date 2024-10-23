@@ -35,10 +35,15 @@ public class User extends AuditableEntity implements UserDetails {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ROLE")
+    private UserRole role;
+
     @Override
     public <T extends NewAuditableDTO> void create(T dto) {
-        RegisterDTO registerDTO = (RegisterDTO) dto;
+        this.role = UserRole.ROLE_USER;
 
+        RegisterDTO registerDTO = (RegisterDTO) dto;
         this.name = registerDTO.name();
         this.email = registerDTO.email();
         this.password = new BCryptPasswordEncoder().encode(registerDTO.password());
@@ -53,7 +58,7 @@ public class User extends AuditableEntity implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(role.toString()));
     }
 
     @Override

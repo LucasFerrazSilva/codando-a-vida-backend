@@ -2,6 +2,7 @@ package com.ferraz.codando_a_vida_backend.domain.auditable;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -41,6 +42,7 @@ public abstract class AuditableController<T extends AuditableEntity, D, N extend
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<D> create(@RequestBody @Valid N newAuditableDTO, UriComponentsBuilder uriComponentsBuilder) throws NewAuditableException {
         T obj = service.create(newAuditableDTO);
         URI uri = uriComponentsBuilder.path("/{path}/{id}").buildAndExpand(path, obj.getId()).toUri();
@@ -60,12 +62,14 @@ public abstract class AuditableController<T extends AuditableEntity, D, N extend
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<D> update(@PathVariable Integer id, @RequestBody @Valid U updateAuditableDTO) {
         T obj = service.update(id, updateAuditableDTO);
         return ResponseEntity.ok(dtoNewInstance(obj));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.ok().build();
