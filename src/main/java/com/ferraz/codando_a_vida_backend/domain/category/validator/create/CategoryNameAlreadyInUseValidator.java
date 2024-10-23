@@ -8,11 +8,11 @@ import com.ferraz.codando_a_vida_backend.infra.exception.ValidationException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryNameAlreadyInUseException implements NewCategoryValidator {
+public class CategoryNameAlreadyInUseValidator implements NewCategoryValidator {
 
     private final CategoryRepository repository;
 
-    public CategoryNameAlreadyInUseException(CategoryRepository repository) {
+    public CategoryNameAlreadyInUseValidator(CategoryRepository repository) {
         this.repository = repository;
     }
 

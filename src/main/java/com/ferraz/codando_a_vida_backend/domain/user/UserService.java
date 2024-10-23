@@ -3,9 +3,6 @@ package com.ferraz.codando_a_vida_backend.domain.user;
 import com.ferraz.codando_a_vida_backend.domain.auditable.AuditableService;
 import com.ferraz.codando_a_vida_backend.domain.user.validator.create.NewUserValidator;
 import com.ferraz.codando_a_vida_backend.domain.user.validator.update.UpdateUserValidator;
-import com.ferraz.codando_a_vida_backend.infra.security.dto.RegisterDTO;
-import jakarta.transaction.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

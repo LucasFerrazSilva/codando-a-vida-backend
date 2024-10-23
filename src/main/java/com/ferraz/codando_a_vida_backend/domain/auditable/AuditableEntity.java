@@ -46,7 +46,7 @@ public abstract class AuditableEntity {
 
     public abstract <T extends NewAuditableDTO> void create(T dto);
 
-    public abstract <T extends UpdateAuditableDTO> void update(T dto, User updateUser);
+    public abstract <T extends UpdateAuditableDTO> void update(T dto);
 
 
     public <T extends NewAuditableDTO> void create(T dto, User createUser) {
@@ -56,7 +56,8 @@ public abstract class AuditableEntity {
         this.createUser = createUser;
     }
 
-    public void update(User updateUser) {
+    public <T extends UpdateAuditableDTO> void update(T dto, User updateUser) {
+        update(dto);
         this.updateDate = LocalDateTime.now();
         this.updateUser = updateUser;
     }

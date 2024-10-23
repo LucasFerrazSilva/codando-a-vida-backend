@@ -48,7 +48,7 @@ public abstract class AuditableService<T extends AuditableEntity, R extends Audi
 
     @Transactional
     public <Y extends UpdateAuditableDTO> T update(Integer id, Y dto) {
-        updateAuditableValidators.forEach(validator -> validator.validate(dto));
+        updateAuditableValidators.forEach(validator -> validator.validate(dto, id));
         T object = repository.findById(id).orElseThrow();
         User loggedUser = getLoggedUser();
         object.update(dto, loggedUser);

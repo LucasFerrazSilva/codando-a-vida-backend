@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class CategoryUtil {
 
-    public static Category createValid(User user, CategoryRepository categoryRepository) {
+    public static Category createValidCategory(User user, CategoryRepository categoryRepository) {
         NewCategoryDTO newCategoryDTO = new NewCategoryDTO("Categoria " + new Random().nextInt(10000));
         Category category = new Category();
         category.create(newCategoryDTO, user);
