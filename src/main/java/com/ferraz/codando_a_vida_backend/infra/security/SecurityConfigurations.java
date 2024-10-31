@@ -40,9 +40,14 @@ public class SecurityConfigurations {
         	        authorizeHttpRequests
                             .requestMatchers(HttpMethod.POST, "/login").permitAll()
                             .requestMatchers(HttpMethod.POST, "/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/actuator").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/actuator/prometheus").permitAll()
-        	            .anyRequest().authenticated()
+                            .requestMatchers(HttpMethod.GET, "/category").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/category/find-by-name/{name}").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/post").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/post/find-by-category/{categoryName}").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/post/find-by-path/{postPath}").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/actuator").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/actuator/prometheus").permitAll()
+                            .anyRequest().authenticated()
         	    )
         	    .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
         	    .build();

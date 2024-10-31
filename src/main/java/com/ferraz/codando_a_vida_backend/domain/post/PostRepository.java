@@ -2,17 +2,18 @@ package com.ferraz.codando_a_vida_backend.domain.post;
 
 import com.ferraz.codando_a_vida_backend.domain.auditable.AuditableRepository;
 import com.ferraz.codando_a_vida_backend.domain.auditable.EntityStatus;
-import com.ferraz.codando_a_vida_backend.domain.category.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PostRepository extends AuditableRepository<Post> {
 
-    List<Post> findByCategoryAndStatus(Category category, EntityStatus status);
+    List<Post> findByCategoryNameAndStatus(String categoryName, EntityStatus status);
 
-    boolean existsByPath(String path);
-    boolean existsByPathAndIdNot(String path, Integer id);
-    boolean existsByTitle(String path);
-    boolean existsByTitleAndIdNot(String path, Integer id);
+    boolean existsByPathAndStatus(String path, EntityStatus status);
+    boolean existsByPathAndStatusAndIdNot(String path, EntityStatus status, Integer id);
+    boolean existsByTitleAndStatus(String path, EntityStatus status);
+    boolean existsByTitleAndStatusAndIdNot(String path, EntityStatus status, Integer id);
 
+    Optional<Post> findByPathAndStatus(String postPath, EntityStatus status);
 }

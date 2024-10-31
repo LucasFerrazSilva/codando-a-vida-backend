@@ -13,7 +13,7 @@ import static com.ferraz.codando_a_vida_backend.infra.security.AuthenticationSer
 public abstract class AuditableService<T extends AuditableEntity, R extends AuditableRepository<T>> {
 
     private final Class<T> clazz;
-    private final R repository;
+    protected final R repository;
     private final List<? extends NewAuditableValidator> newAuditableValidators;
     private final List<? extends UpdateAuditableValidator> updateAuditableValidators;
 

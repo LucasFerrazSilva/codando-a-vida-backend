@@ -1,5 +1,6 @@
 package com.ferraz.codando_a_vida_backend.domain.post.validator;
 
+import com.ferraz.codando_a_vida_backend.domain.auditable.EntityStatus;
 import com.ferraz.codando_a_vida_backend.domain.auditable.NewAuditableDTO;
 import com.ferraz.codando_a_vida_backend.domain.auditable.UpdateAuditableDTO;
 import com.ferraz.codando_a_vida_backend.domain.post.PostRepository;
@@ -22,14 +23,14 @@ public class PathAlreadyInUseValidator implements NewPostValidator, UpdatePostVa
     @Override
     public <T extends NewAuditableDTO> void validate(T dto) {
         NewPostDTO newPostDTO = (NewPostDTO) dto;
-        if(repository.existsByPath(newPostDTO.path()))
+        if(repository.existsByPathAndStatus(newPostDTO.path(), EntityStatus.ACTIVE))
             throw new ValidationException("path", "O path especificado já está em uso.");
     }
 
     @Override
     public <T extends UpdateAuditableDTO> void validate(T dto, Integer id) {
         UpdatePostDTO updatePostDTO = (UpdatePostDTO) dto;
-        if(repository.existsByPathAndIdNot(updatePostDTO.path(), id))
+        if(repository.existsByPathAndStatusAndIdNot(updatePostDTO.path(), EntityStatus.ACTIVE, id))
             throw new ValidationException("path", "O path especificado já está em uso.");
     }
 }
